@@ -21,8 +21,5 @@
     "noImplicitReturns": true,
     "resolveJsonModule": true,
     "declaration": true
-  },
-  "include": [
-    "application"
-  ]
+  }
 }

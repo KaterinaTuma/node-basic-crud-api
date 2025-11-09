@@ -1,5 +1,5 @@
 # crud-api
 
-✅ Node.js
-✅ JavaScript
-✅ TypeScript
+✅ Node.js  
+✅ JavaScript  
+✅ TypeScript  
