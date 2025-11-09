@@ -22,13 +22,13 @@ const getUsers = async (deps) => {
  * @function getUserById
  * @param {Deps} deps
  * @param {string} id
- * @throws {Error} Validation error: id must be a UUID
+ * @throws {Error} Validation error: userId must be a UUID
  * @returns {Promise<User | null>}
  */
 
 const getUserById = async (deps, id) => {
   const isUUID = checkUUID(id);
-  if (!isUUID) throw new Error('Validation error: id must be a UUID');
+  if (!isUUID) throw new Error('Validation error: userId must be a UUID');
   return deps.model.getUserById(id);
 };
 
@@ -48,10 +48,13 @@ const createUser = async (deps, user) => {
  * @param {Deps} deps
  * @param {string} id
  * @param {Partial<User>} userForUpdate
+ * @throws {Error} Validation error: userId must be a UUID
  * @returns {Promise<User | null>}
  */
 
 const updateUser = async (deps, id, userForUpdate) => {
+  const isUUID = checkUUID(id);
+  if (!isUUID) throw new Error('Validation error: userId must be a UUID');
   return deps.model.updateUser(id, userForUpdate);
 };
 

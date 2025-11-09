@@ -73,4 +73,27 @@ export const routes = [
       return;
     },
   },
+
+  /**
+   * @method PUT
+   * @route /api/users/:id
+   * @description Updating user
+   */
+
+  {
+    method: 'PUT',
+    endpoint: '/api/users/:id',
+    handler: async (req, res) => {
+      const urlParts = req.url?.split('/') ?? [];
+      const pathParam = urlParts[urlParts.length - 1] ?? '';
+      const id = pathParam;
+      const parsedUser = /** @type {object} */(await parseJSON(req));
+      validate(parsedUser, schema.user);
+      const user = /** @type {Omit<User, 'id'>} */(parsedUser);
+      const updatedUser = await service.updateUser(id, user);
+      const resData = JSON.stringify(updatedUser);
+      res.writeHead(201, headers).end(resData);
+      return;
+    },
+  },
 ];
