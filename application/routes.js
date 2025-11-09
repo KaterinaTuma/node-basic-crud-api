@@ -92,7 +92,25 @@ export const routes = [
       const user = /** @type {Omit<User, 'id'>} */(parsedUser);
       const updatedUser = await service.updateUser(id, user);
       const resData = JSON.stringify(updatedUser);
-      res.writeHead(201, headers).end(resData);
+      res.writeHead(200, headers).end(resData);
+      return;
+    },
+  },
+
+  /**
+   * @method DELETE
+   * @route /api/users/:id
+   * @description Deleting user by id
+   */
+
+  {
+    method: 'DELETE',
+    endpoint: '/api/users/:id',
+    handler: async (req, res) => {
+      const urlParts = req.url?.split('/') ?? [];
+      const pathParam = urlParts[urlParts.length - 1] ?? '';
+      await service.deleteUser(pathParam);
+      res.writeHead(204, headers).end();
       return;
     },
   },

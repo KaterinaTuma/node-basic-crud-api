@@ -62,10 +62,13 @@ const updateUser = async (deps, id, userForUpdate) => {
  * @function deleteUser
  * @param {Deps} deps
  * @param {string} id
+ * @throws {Error} Validation error: userId must be a UUID
  * @returns {Promise<boolean>}
  */
 
 const deleteUser = async (deps, id) => {
+  const isUUID = checkUUID(id);
+  if (!isUUID) throw new Error('Validation error: userId must be a UUID');
   return deps.model.deleteUser(id);
 };
 
