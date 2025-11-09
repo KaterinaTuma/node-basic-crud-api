@@ -1,0 +1,27 @@
+{
+  "name": "node-basics-crud-api",
+  "description": "Application server on Node.js",
+  "author": "KaterinaTuma",
+  "main": "main.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node --env-file=.env application/main.js",
+    "test": "node --env-file=.env ./node_modules/.bin/tap",
+    "ts": "tsc --noEmit",
+    "lint": "npx eslint application"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "eslint": "^9.34.0",
+    "prettier": "^2.8.3",
+    "tap": "^21.1.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "uuid": "^13.0.0"
+  }
+}
