@@ -31,12 +31,13 @@ export class Model {
    * @method getUserById
    * @description Getting user by id
    * @param {string} id
-   * @returns {User | null}
+   * @returns {User}
    */
 
   getUserById(id) {
     const user = users.find((user) => user.id === id);
-    return user ?? null;
+    if (!user) throw new Error('User not found');
+    return user;
   }
 
   /**

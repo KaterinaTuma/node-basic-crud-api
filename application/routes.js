@@ -1,11 +1,15 @@
-// import { data } from '../_mock/data.js';
 // import { parseJSON } from './parsers/parseJSON.js';
 // import { schema } from './validation/schema.js';
 // import { validate } from './validation/validate.js';
 import { service } from './diContainer.js';
+// import { getBody } from './utils/getters.js';
+import { parseJSON } from './utils/parsers.js';
+import { schema } from './validation/schema.js';
+import { validate } from './validation/validate.js';
 
 /**
  * @typedef {import('./types').Route} Route
+ * @typedef {import('./types').User} User
  */
 
 const headers = { 'Content-Type': 'application/json' };
@@ -25,7 +29,7 @@ export const routes = [
     endpoint: '/api/users',
     handler: async (_, res) => {
       const users = await service.getUsers();
-      const resData = JSON.stringify({ users });
+      const resData = JSON.stringify(users);
       res.writeHead(200, headers).end(resData);
       return;
     },
@@ -33,107 +37,39 @@ export const routes = [
 
   /**
    * @method GET
-   * @route /api/user/:id
+   * @route /api/users/:id
    * @description Getting user by id
    */
 
   {
     method: 'GET',
-    endpoint: '/api/user/:id',
+    endpoint: '/api/users/:id',
     handler: async (req, res) => {
       const urlParts = req.url?.split('/') ?? [];
-      const pathParam = urlParts[-1] ?? '';
+      const pathParam = urlParts[urlParts.length - 1] ?? '';
       const user = await service.getUserById(pathParam);
-      const resData = JSON.stringify({ user });
+      const resData = JSON.stringify(user);
       res.writeHead(200, headers).end(resData);
-      return;
-    },
-  },
-
-  /**
-   * @method GET
-   * @route /data/care
-   * @description Getting care data
-   */
-
-  {
-    method: 'GET',
-    endpoint: '/data/care',
-    handler: async (_, res) => {
-      const care = data.care;
-      const resData = JSON.stringify({ care });
-      res.writeHead(statusCode, headers).end(resData);
-      return;
-    },
-  },
-
-  /**
-   * @method GET
-   * @route /data/cashback
-   * @description Getting cashback data
-   */
-
-  {
-    method: 'GET',
-    endpoint: '/data/cashback',
-    handler: async (_, res) => {
-      const cashback = data.cashback;
-      const resData = JSON.stringify({ cashback });
-      res.writeHead(statusCode, headers).end(resData);
-      return;
-    },
-  },
-
-  /**
-   * @method GET
-   * @route /data/clients
-   * @description Getting clients data
-   */
-
-  {
-    method: 'GET',
-    endpoint: '/data/clients',
-    handler: async (_, res) => {
-      const clients = data.clients;
-      const resData = JSON.stringify({ clients });
-      res.writeHead(statusCode, headers).end(resData);
-      return;
-    },
-  },
-
-  /**
-   * @method GET
-   * @route /data/meta
-   * @description Getting meta data
-   */
-
-  {
-    method: 'GET',
-    endpoint: '/data/meta',
-    handler: async (_, res) => {
-      const meta = data.meta;
-      const resData = JSON.stringify({ meta });
-      res.writeHead(statusCode, headers).end(resData);
       return;
     },
   },
 
   /**
    * @method POST
-   * @route /order
-   * @description Creating order
+   * @route /api/users
+   * @description Creating user
    */
 
   {
     method: 'POST',
-    endpoint: '/order',
+    endpoint: '/api/users',
     handler: async (req, res) => {
-      const parsedOrder = await parseJSON(req);
-      validate(parsedOrder, schema.order);
-      // TODO: db methods
-      const isCreated = true;
-      const resData = JSON.stringify({ success: isCreated, order: parsedOrder });
-      res.writeHead(statusCode, headers).end(resData);
+      const parsedUser = /** @type {object} */(await parseJSON(req));
+      validate(parsedUser, schema.user);
+      const user = /** @type {Omit<User, 'id'>} */(parsedUser);
+      const createdUser = await service.createUser(user);
+      const resData = JSON.stringify(createdUser);
+      res.writeHead(201, headers).end(resData);
       return;
     },
   },

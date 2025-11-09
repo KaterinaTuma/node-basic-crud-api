@@ -6,7 +6,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "node --env-file=.env application/main.js",
+    "start:dev": "node --env-file=.env application/main.js",
+    "start:prod": "node --env-file=.env application/main.js",
     "test": "node --env-file=.env ./node_modules/.bin/tap",
     "ts": "tsc --noEmit",
     "lint": "npx eslint application"

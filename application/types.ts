@@ -89,7 +89,7 @@ export type Deps = {
   Service
 **********************************************/
 
-type Id = UUID;
+type Id = UUID | string;
 type IsDeleted = boolean;
 
 export type Service = {

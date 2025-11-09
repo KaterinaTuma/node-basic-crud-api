@@ -104,9 +104,6 @@ export default [
       'no-invalid-this': [
         'error',
       ],
-      'class-methods-use-this': [
-        'warn',
-      ],
       'handle-callback-err': [
         'error',
         '^err',

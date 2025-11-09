@@ -1,4 +1,5 @@
 import { toPartial } from './utils/transforms.js';
+import { checkUUID } from './utils/checks.js';
 import { Model } from './model.js';
 
 /**
@@ -21,10 +22,13 @@ const getUsers = async (deps) => {
  * @function getUserById
  * @param {Deps} deps
  * @param {string} id
+ * @throws {Error} Validation error: id must be a UUID
  * @returns {Promise<User | null>}
  */
 
 const getUserById = async (deps, id) => {
+  const isUUID = checkUUID(id);
+  if (!isUUID) throw new Error('Validation error: id must be a UUID');
   return deps.model.getUserById(id);
 };
 

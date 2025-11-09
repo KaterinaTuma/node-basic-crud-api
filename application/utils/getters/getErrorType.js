@@ -9,13 +9,14 @@
  */
 
 export const getErrorType = (error) => {
+  const errorMessage = error.message.toLowerCase();
   const isNotfoundError = (
-    error.message.includes('not found')
+    errorMessage.includes('not found')
   );
   if (isNotfoundError) return 'notfound';
 
   const isValidationError = (
-    error.message.includes('validation')
+    errorMessage.includes('validation')
   );
   if (isValidationError) return 'validation';
 
